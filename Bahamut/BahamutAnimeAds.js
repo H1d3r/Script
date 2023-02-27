@@ -19,11 +19,17 @@ runs().catch((err) => {
 }));
 
 async function runs() {
-  if (req.url.includes('token.php') && rsp.ad) {
-    rsp.ad.minor = [];
-    rsp.ad.major = [];
+  if (req.url.includes('token.php')) {
+    if (rsp.ad) {
+      rsp.ad.minor = [];
+      rsp.ad.major = [];
+    }
+    if (rsp.data && rsp.data.ad) {
+      rsp.data.ad.minor = [];
+      rsp.data.ad.major = [];
+    }  
   }
-  if (req.url.includes('m3u8.php') && rsp.message) {
+  if (req.url.includes('m3u8.php') && (rsp.message || rsp.error)) {
     await adURL('');
     await new Promise(r => setTimeout(r, 25000));
     await adURL('end');
